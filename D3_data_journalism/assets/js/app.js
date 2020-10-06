@@ -128,10 +128,88 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText) {
         .on("mouseout", function(data, index) {
             toolTip.hide(data);
         });
-    return circleGroup;
+    return circlesGroup;
 }
 
 
 d3.csv('/assets/data/data.csv').then(function(newsData) {
-    console.log(newsData);
+    //console.log(newsData);
+    // clean up that data!
+    newsData.forEach(function(d) {
+    d.age = +d.age;
+    d.poverty = +d.poverty;
+    d.income = +d.income;
+    d.obesity = +d.obesity;
+    d.smokes = +d.smokes;
+    d.healthcare = +d.healthcare;
+    });
+
+    // X Scale
+    var xLinearScale = xScale(newsData, chosenXAxis);
+    // Y Scale
+    var YLinearScale = yScale(newsData, chosenYAxis);
+
+    // initial axis functions
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var leftAxis = d3.leftAxis(YLinearScale);
+
+    //append x axis 
+    var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
+        .attr("transform", `translate(0,${height})`)
+        .call(bottomAxis);
+    // append y axis
+    var yAxis = chartGroup.append("g")
+        .classed("y-axis", true)
+        .call(leftAxis);
+
+    // create circles on graph
+    var circlesGroup = chartGroup.selectAll("circle")
+        .data(newsData)
+        .enter()
+        .append("cicle")
+        .attr("cx", d => xLinearScale(d[chosenXAxis]))
+        .attr("cy", d => yLinearScale(d[chosenYAxis]))
+        .classed("stateCircle", true)
+        .attr("r", 15)
+
+    var circlesText = chartGroup.selectAll("text")
+        .data(newsData)
+        .enter()
+        .append("text")
+        .attr("x", d => xLinearScale(d[chosenXAxis]))
+        .attr("y", d => yLinearScale(d[chosenYAxis]))
+        .classed("stateText", true)
+        .attr("dy", ".3em")
+        .text(d => (d.abbr))
+
+    // x labels group 3 obesity, smoke%, healthcare%
+    var xLabelGroup = chartGroup.append("g")
+        .attr("font-size", "15px")
+        .attr("text-anchor", "middle")
+        .attr("transform", `translate(${width / 2}, ${height + 20})`)
+
+    var obeseLabel = xLabelGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 30)
+        .attr("value", "obesity")
+        .classed("active", true)
+        .text("Obesity %:")
+
+    var smokeLabel = xLabelGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 50)
+        .attr("value", "smokes")
+        .classed("inactive", true)
+        .text("Smoking %:")
+
+    var healthcareLabel = xLabelGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 50)
+        .attr("value", "healthcare")
+        .classed("inactive", true)
+        .text("% w/o Healthcare:")
+
+
 }); 
+
