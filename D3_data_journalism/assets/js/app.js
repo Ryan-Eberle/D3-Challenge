@@ -208,8 +208,40 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
         .attr("y", 50)
         .attr("value", "healthcare")
         .classed("inactive", true)
-        .text("% w/o Healthcare:")
+        .text("Lacks Healthcare(%):")
 
+    // y labels group Age, Poverty, Income
+
+    var yLabelGroup = chartGroup.append("g")
+        .attr("font-size", "15px")
+        .attr("text-anchor", "middle")
+        .attr("transform", `rotate(-90)`);
+
+    var ageLabel = yLabelGroup.append("text")
+        .attr("x", -200)
+        .attr("y", -30)
+        .attr("value", "age")
+        .classed("active", true)
+        .text("Age(Median):")
+
+    var povertyLabel = yLabelGroup.append("g")
+        .attr("x", -200)
+        .attr("y", -50)
+        .attr("value", "poverty")
+        .classed("inactive", true)
+        .text("Poverty %:")
+
+    var incomeLabel = yLabelGroup.append("g")
+        .attr("x", -200)
+        .attr("y", -70)
+        .attr("value", "income")
+        .classed("inactive", true)
+        .text("Median Income Level:")
+
+    // updateToolTip function    
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText)
+
+    // HERE YOU WILL ADD EVENT LISTENERS
 
 }); 
 
