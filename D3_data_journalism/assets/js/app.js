@@ -253,7 +253,7 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
                 circlesText = renderText(circlesText, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis)
                 circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText);
 
-                if (chosenXAxis === 'obseity'){
+                if (chosenXAxis === 'obesity'){
                     obeseLabel
                         .classed('active', true)
                         .classed('inactive', false);

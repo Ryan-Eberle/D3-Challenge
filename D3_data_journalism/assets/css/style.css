@@ -8,7 +8,10 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+.article {
+  text-align: justify;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
 body {
   /* Padding bottom by footer height */
   padding-bottom: 80px;
