@@ -1,5 +1,5 @@
 // @TODO: YOUR CODE HERE!
-var svgWidth = 960;
+var svgWidth = 980;
 var svgHeight = 600;
 var margin = {
     top:50,
@@ -74,8 +74,8 @@ function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYA
 function renderText(circlesText, newXScale, newYScale, chosenXAxis, chosenYAxis) {
     circlesText.transition()
         .duration(1000)
-        .attr("cx", d => newXScale(d[chosenXAxis]))
-        .attr("cy", d => newYScale(d[chosenYAxis]));
+        .attr("x", d => newXScale(d[chosenXAxis]))
+        .attr("y", d => newYScale(d[chosenYAxis]));
     return circlesText;
 }
 // ToolTip function for X and Y 
@@ -84,15 +84,15 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText) {
     var xformatLabel;
 
     if (chosenXAxis === "obesity") {
-        label = "Obeseity: "
+        xLabel = "Obeseity: "
         xformatLabel = "%";
     }
     else if (chosenXAxis === "smokes"){
-        label = "Smokes: "
+        xLabel = "Smokes: "
         xformatLabel = "%";
     }
     else {
-        label = "Lacks Healthcare: "
+        xLabel = "Lacks Healthcare: "
         xformatLabel = "%";
     }
 
@@ -100,38 +100,34 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText) {
     var yformatLabel
 
     if (chosenYAxis === "age") {
-        label = "Age: "
+        yLabel = "Age: "
         yformatLabel = " ";
     }
     else if (chosenYAxis === "poverty") {
-        label = "Poverty: "
+        yLabel = "Poverty: "
         yformatLabel = "%";
     }
     else {
-        label = "Household Income: $"
+        yLabel = "Household Income: $"
         yformatLabel = " ";
     }
     // format tooltip variable show state data 
-    var toolTip = d3.select("body")
-        .append('div')
-        .classed("tooltip", true);
-        // .html(function(d) {
-        //     return (`${d['state']}<br>
-        //     ${xLabel}${chosenXAxis}${xformatLabel}<br>
-        //     ${yLabel}${chosenYAxis}${yformatLabel}`)
-        // });
+    var toolTip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([80,-60])
+        .html(function(d) {
+            return (`${d.state}<br>
+            ${xLabel}${d[chosenXAxis]}${xformatLabel}<br>
+            ${yLabel}${d[chosenYAxis]}${yformatLabel}`)
+        });
 
-    // circlesGroup.call(toolTip);
+    chartGroup.call(toolTip);
 
     circlesGroup.on("mouseover", function(d) {
-        toolTip.style("display","block")
-            .html(`${d.state}<br>
-                ${xLabel}${chosenXAxis}${xformatLabel}<br>
-                ${yLabel}${chosenYAxis}${yformatLabel}`
-            )
+        toolTip.show(d,this);
     })
-        .on("mouseout", function() {
-            toolTip.style("display", "none");
+        .on("mouseout", function(d) {
+            toolTip.hide(d);
         });
     return circlesGroup;
 }
@@ -169,16 +165,16 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
         .call(leftAxis);
 
     // create circles on graph
-    var circlesGroup = chartGroup.selectAll("circle")
+    var circlesGroup = chartGroup.selectAll(".stateCircle")
         .data(newsData)
         .enter()
-        .append("cicle")
+        .append("circle")
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d[chosenYAxis]))
         .classed("stateCircle", true)
         .attr("r", 15)
-
-    var circlesText = chartGroup.selectAll("text")
+    // 
+    var circlesText = chartGroup.selectAll(".stateText")
         .data(newsData)
         .enter()
         .append("text")
@@ -224,27 +220,27 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
 
     var ageLabel = yLabelGroup.append("text")
         .attr("x", -200)
-        .attr("y", -30)
+        .attr("y", -50)
         .attr("value", "age")
         .classed("active", true)
         .text("Age(Median):")
 
-    var povertyLabel = yLabelGroup.append("g")
-        .attr("x", -230)
-        .attr("y", -30)
+    var povertyLabel = yLabelGroup.append("text")
+        .attr("x", -200)
+        .attr("y", -70)
         .attr("value", "poverty")
         .classed("inactive", true)
         .text("Poverty %:")
 
-    var incomeLabel = yLabelGroup.append("g")
-        .attr("x", -250)
-        .attr("y", -30)
+    var incomeLabel = yLabelGroup.append("text")
+        .attr("x", -200)
+        .attr("y", -90)
         .attr("value", "income")
         .classed("inactive", true)
         .text("Median Income Level:")
 
     // updateToolTip function    
-    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText)
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText);
 
     xLabelGroup.selectAll("text")
         .on("click", function(){
