@@ -1,6 +1,6 @@
 // @TODO: YOUR CODE HERE!
 var svgWidth = 960;
-var svgHeight = 500;
+var svgHeight = 600;
 var margin = {
     top:50,
     right: 20,
@@ -44,10 +44,10 @@ function yScale(newsData, chosenYAxis) {
     return YLinearScale;
 }
 //function for updating Xaxis variable when clicked
-function renderXAxis(newXScale, Xaxis) {
+function renderXAxis(newXScale, xAxis) {
     var bottomAxis = d3.axisBottom(newXScale);
 
-    Xaxis.transition()
+    xAxis.transition()
         .duration(1000)
         .call(bottomAxis);
     return xAxis;
@@ -112,21 +112,26 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText) {
         yformatLabel = " ";
     }
     // format tooltip variable show state data 
-    var toolTip = d3.tip()
-        .attr("class", "tooltip")
-        .html(function(d) {
-            return (`${d.state}<br>
-            ${xLabel}${chosenXAxis}${xformatLabel}<br>
-            ${yLabel}${chosenYAxis}${yformatLabel}`)
-        });
+    var toolTip = d3.select("body")
+        .append('div')
+        .classed("tooltip", true);
+        // .html(function(d) {
+        //     return (`${d['state']}<br>
+        //     ${xLabel}${chosenXAxis}${xformatLabel}<br>
+        //     ${yLabel}${chosenYAxis}${yformatLabel}`)
+        // });
 
-    circlesGroup.call(toolTip);
+    // circlesGroup.call(toolTip);
 
-    circlesGroup.on("mouseover", function(data) {
-        toolTip.show(data);
+    circlesGroup.on("mouseover", function(d) {
+        toolTip.style("display","block")
+            .html(`${d.state}<br>
+                ${xLabel}${chosenXAxis}${xformatLabel}<br>
+                ${yLabel}${chosenYAxis}${yformatLabel}`
+            )
     })
-        .on("mouseout", function(data, index) {
-            toolTip.hide(data);
+        .on("mouseout", function() {
+            toolTip.style("display", "none");
         });
     return circlesGroup;
 }
@@ -147,11 +152,11 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
     // X Scale
     var xLinearScale = xScale(newsData, chosenXAxis);
     // Y Scale
-    var YLinearScale = yScale(newsData, chosenYAxis);
+    var yLinearScale = yScale(newsData, chosenYAxis);
 
     // initial axis functions
     var bottomAxis = d3.axisBottom(xLinearScale);
-    var leftAxis = d3.leftAxis(YLinearScale);
+    var leftAxis = d3.axisLeft(yLinearScale);
 
     //append x axis 
     var xAxis = chartGroup.append("g")
@@ -205,7 +210,7 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
 
     var healthcareLabel = xLabelGroup.append("text")
         .attr("x", 0)
-        .attr("y", 50)
+        .attr("y", 70)
         .attr("value", "healthcare")
         .classed("inactive", true)
         .text("Lacks Healthcare(%):")
@@ -225,15 +230,15 @@ d3.csv('/assets/data/data.csv').then(function(newsData) {
         .text("Age(Median):")
 
     var povertyLabel = yLabelGroup.append("g")
-        .attr("x", -200)
-        .attr("y", -50)
+        .attr("x", -230)
+        .attr("y", -30)
         .attr("value", "poverty")
         .classed("inactive", true)
         .text("Poverty %:")
 
     var incomeLabel = yLabelGroup.append("g")
-        .attr("x", -200)
-        .attr("y", -70)
+        .attr("x", -250)
+        .attr("y", -30)
         .attr("value", "income")
         .classed("inactive", true)
         .text("Median Income Level:")
