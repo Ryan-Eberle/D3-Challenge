@@ -133,7 +133,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circlesText) {
 }
 
 
-d3.csv('/assets/data/data.csv').then(function(newsData) {
+d3.csv('assets/data/data.csv').then(function(newsData) {
     //console.log(newsData);
     // clean up that data!
     newsData.forEach(function(d) {
