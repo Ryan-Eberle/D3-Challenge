@@ -8,8 +8,14 @@ html {
   position: relative;
   min-height: 100%;
 }
-.article {
-  text-align: justify;
+h2 {
+  padding-left: 160px;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+p {
+  padding-left: 160px;
+  text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 body {
