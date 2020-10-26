@@ -13,6 +13,7 @@ Using the tools available through Javascript and D3, we will bind our data csv f
 
 ### Healthcare / Income Level
 There is a correlation that shows lower levels of income and an increase in the the lack of healthcare proved. Does the rising cost of healthcare prohibit active engagement in the healthcare system from the lowest levels of poverty? 
+https://github.com/Ryan-Eberle/Data-Journalism/blob/main/assets/data/Healthcare:Income.png
 
 ### Income / Smoking Percentage
 
