@@ -1,7 +1,7 @@
 
 
 ## Visit Site 
-https://ryan-eberle.github.io/D3-Challenge/
+https://ryan-eberle.github.io/Data-Journalism/
 
 ## Overview
 In this project, we are studying the relationship between demographics and health risk factors. We are doing this with information from the U.S. Census Bureau and the Behavioral Risk Factor Surveillance System. Using a compelling visualization, we aim to share the powerful aspects of this data set in a way that users can interact with. 
