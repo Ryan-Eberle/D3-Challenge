@@ -13,11 +13,15 @@ Using the tools available through Javascript and D3, we will bind our data csv f
 
 ### Healthcare / Income Level
 There is a correlation that shows lower levels of income and an increase in the the lack of healthcare proved. Does the rising cost of healthcare prohibit active engagement in the healthcare system from the lowest levels of poverty? 
-![alt text]https://github.com/Ryan-Eberle/Data-Journalism/blob/main/assets/data/Healthcare:Income.png
+<img width="1009" alt="Healthcare:Income" src="https://user-images.githubusercontent.com/65464107/97226265-5cd79700-1799-11eb-99b1-4d92d3402de9.png">
 
 ### Income / Smoking Percentage
 
 Higher levels of smoking percentage correlatate with a decrease in income across this data set. This point of data could be shown to policy makers in a way to help provide resources and education amongst these population groups in an aim to decrease the smoking percentage amongst the most affected. 
+<img width="1061" alt="Income:Smoking%" src="https://user-images.githubusercontent.com/65464107/97226349-78db3880-1799-11eb-93ad-d794391dd150.png">
+
 
 ### Poverty / Obesity Percentage
 Strong trend as Poverty% increases so does the Obesity% of the United States population. This finding would benefit from futher analysis on the access and affordability of healthy/fresh food in this areas of high obesity percentage. Where can resources be provided to expand access for this demographic? What type of educational programs could be installed to help citizens make healthier choices. 
+<img width="1042" alt="Poverty:Obesity" src="https://user-images.githubusercontent.com/65464107/97226388-85f82780-1799-11eb-910e-090c1982ef4d.png">
+
